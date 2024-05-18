@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-gateway
+spec:
+  selector:
+    matchLabels:
+      app: cloud-gateway
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: cloud-gateway
+    spec:
+      containers:
+        - name: cloud-gateway
+          image: borissolomonia/dailycodebuffer:api-gateway-10
+          ports:
+            - containerPort: 8765
+          env:
+            - name: REDIRECT_URI
+#              value: "http://api-gateway.192-168-49-2.nip.io/code/okta/login/oauth2/code/okta"
+#              value: "http://gateway.localtest.me/login/oauth2/code/okta"
+              value: "http://127.0.0.1:61908/login/oauth2/code/okta"
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: eureka-cm
+                  key: eureka_service_address
+            - name: CONFIG_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: config-cm
+                  key: spring_config_import
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-gateway-svc
+spec:
+    type: LoadBalancer
+    selector:
+        app: cloud-gateway
+    ports:
+        - port: 80
+          targetPort: 8765
