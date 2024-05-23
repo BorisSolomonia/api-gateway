@@ -129,6 +129,13 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<from>
+						<image>openjdk:17</image>
+					</from>
+					<to>
+						<image>${REPO_URL}/api-gateway</image>
+						<tags>${project.version}</tags>
+					</to>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
