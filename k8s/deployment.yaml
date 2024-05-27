@@ -34,6 +34,7 @@ spec:
                   key: spring_config_import
 
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
