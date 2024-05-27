@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: cloud-gateway
-          image: IMAGE_URL/dailycodebuffer:api-gateway-10
+          image: borissolomonia/dailycodebuffer:api-gateway-10
           ports:
             - containerPort: 8765
           env:
